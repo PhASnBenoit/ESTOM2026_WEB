@@ -33,12 +33,12 @@ foreach ($newCollisions as $collision) {
         if ($existingCollision['x'] == $collision['x'] && $existingCollision['y'] == $collision['y']) {
             $alreadyExists = true;
             break;
-        }
-    }
+        } // if
+    } // foreach exis
     if (!$alreadyExists) {
         $existingCollisions[] = $collision;
-    }
-}
+    } // if
+} // foreach newcoll
 
 // Mise à jour des collisions dans la base
 $collisionsJson = json_encode($existingCollisions);

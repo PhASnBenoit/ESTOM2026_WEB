@@ -1,4 +1,5 @@
 <?php
+// Vérifié par PhA
 require 'private-estom/db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
@@ -46,8 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
             echo "Erreur lors de la récupération de la durée.";
             $conn->close();
             exit;
-        }
-    }    
+        } // else
+    } // if 
     
     if ($status === 'running') {
         // Vérifie si on a déjà une heure_depart
@@ -60,12 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
             } else {
                 // Ne pas réinitialiser heure_depart
                 $updateSql = "UPDATE Config SET Status = $statusValue WHERE id = 1";
-            }
+            } // else
         } else {
             echo "Erreur lors de la récupération des données.";
             $conn->close();
             exit();
-        }
+        } // else
 
     } elseif ($status === 'paused') {
         // Calcule le temps restant
@@ -81,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
             echo "Erreur lors de la récupération des données.";
             $conn->close();
             exit();
-        }
+        } // else
 
     } elseif ($status === 'stopped') {
         // Reset total : plus d'heure de départ ni de temps restant
@@ -90,13 +91,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
     } elseif ($status === 'loading') {
         // Loading : juste MAJ du statut
         $updateSql = "UPDATE Config SET Status = $statusValue WHERE id = 1";
-    }
+    } // elseif
 
     if (!empty($updateSql) && $conn->query($updateSql) === TRUE) {
         echo "Mise à jour réussie. Nouveau statut : $status ($statusValue)";
     } else {
         echo "Erreur SQL : " . $conn->error;
-    }
+    } // else
 
     $conn->close();
 }

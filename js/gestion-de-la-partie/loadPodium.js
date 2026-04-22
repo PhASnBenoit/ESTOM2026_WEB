@@ -1,3 +1,4 @@
+// Vérifié par PhA
 function loadPodium() {
     fetch('./get_podium.php')
         .then(response => response.json())

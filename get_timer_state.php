@@ -1,4 +1,5 @@
 <?php
+// Vérifié par PhA
 header('Content-Type: application/json');
 require './private-estom/db_connect.php';
 
@@ -22,7 +23,7 @@ if ($result && $row = $result->fetch_assoc()) {
         case 3: 
             $statusText = 'loading'; 
             break;
-    }
+    } // sw
 
     // Par défaut, on prend Temps_restant
     $tempsRestant = (int)$row['Temps_restant'];
@@ -32,16 +33,16 @@ if ($result && $row = $result->fetch_assoc()) {
         $heureDepart = strtotime($row['Heure_depart']);
         $tempsEcoule = time() - $heureDepart;
         $tempsRestant = max(0, (int)$row['duree'] - $tempsEcoule);
-    }
+    } // if statusText
 
     $response = [
-        'status' => $statusText,
-        'temps_restant' => $tempsRestant,
-        'duree' => (int)$row['duree']
+        "status" => $statusText,
+        "temps_restant" => $tempsRestant,
+        "duree" => (int)$row['duree']
     ];
 } else {
-    $response = ['error' => 'Impossible de récupérer l’état du timer.'];
-}
+    $response = ["error" => "Impossible de récupérer l’état du timer."];
+} // else
 
 $conn->close();
 echo json_encode($response);

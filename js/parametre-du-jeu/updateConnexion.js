@@ -59,8 +59,8 @@ function updateConnexion() {
                             if (!currentState[key]) {
                                 currentState[key] = isConnected;
 
-                                if (isConnected) {
-									console.print("PAV connected");
+                                if (currentState[key] == isConnected) {
+									//console.log("PAV connected");
                                     if (!previousState[key]) {
                                         pavElement.classList.remove('grise', 'deconnecte');
                                         pavElement.classList.add('connecte');

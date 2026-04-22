@@ -1,5 +1,7 @@
 <?php
 // vérifié par PhA
+// v2.0 du 22/04/2026
+// v2.1 22/04/2026 Correction bug affichage PAV
 ?>
 <!DOCTYPE html>
 <html lang="en">

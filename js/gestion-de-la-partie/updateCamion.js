@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 console.error("Erreur lors de la récupération de l'heure de départ :", data.error);
                 return null;
-            }
+            } // else
         })
         .catch(error => {
             console.error("Erreur réseau lors de la récupération de l'heure de départ :", error);
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data.error) {
                     console.error(`Erreur : ${data.error}`);
                     return;
-                }
+                } // if
 
                 data.forEach((camionData, index) => {
                     let ip = camionData.ip;
@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     if (!json.success) console.error("Erreur enregistrement score :", json.error);
                                 })
                                 .catch(err => console.error("Erreur réseau lors de l’envoi du score :", err));
-                            }
+                            } // if result
                         });
                         
                     } else if (!scoreFinalEnvoye[ip]) {
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Suppression des collisions si leur nombre diminue
                     if (!collisionPositions[ip]) {
                         collisionPositions[ip] = [];
-                    }
+                    } // if
 
                     let existingIndexes = Object.keys(collisionPositions[ip]); // Index existants en mémoire
                     let collisionIndexes = collisions.map(c => c.index); // Index en base
@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             let el = document.querySelector(`.collision[data-ip="${ip}"][data-index="${index}"]`);
                             if (el) el.remove();
                             delete collisionPositions[ip][index]; // Supprime aussi du cache JS
-                        }
+                        } // if
                     });
 
                     // Ajouter les collisions existantes en base si elles ne sont pas encore affichées

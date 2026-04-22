@@ -1,14 +1,15 @@
 <?php
+// Vérifié par PhA
 require 'private-estom/db_connect.php';
 
 $sql = "SELECT Joueur, Score, Couleur FROM BOM ORDER BY Score DESC LIMIT 3";
 $result = $conn->query($sql);
 
 $colorNames = [
+    0 => "Jaune",
     1 => "Vert",
-    2 => "Jaune",
+    2 => "Bleu"
     3 => "Noir",
-    4 => "Bleu"
 ];
 
 $classement = [];

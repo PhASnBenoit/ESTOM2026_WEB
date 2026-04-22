@@ -1,3 +1,4 @@
+// Vérifié par PhA
 let timerInterval;
 let remainingTime = timerDuration; // Valeur initiale du temps restant
 let isTimerRunning = false; // État du timer
@@ -57,9 +58,9 @@ window.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             if (data.error) {
-                console.error(data.error);
+                console.error("ERREUR !", data.error);
                 return;
-            }
+            } // if erreur
 
             const status = data.status;
             remainingTime = parseInt(data.temps_restant) || timerDuration;
@@ -128,7 +129,7 @@ document.getElementById('startGameButton').addEventListener('click', function ()
         remainingTime = timerDuration; // Réinitialiser à la durée initiale
         updateDatabaseStatus('stopped');
         // Compte à rebours de 5 secondes avant le démarrage
-        let countdown = 5;
+        let countdown = 3;
         const timerDiv = document.getElementById('timer');
         timerDiv.textContent = `Démarrage dans : ${countdown}s`;
         const countdownInterval = setInterval(() => {
@@ -142,7 +143,7 @@ document.getElementById('startGameButton').addEventListener('click', function ()
                 startCountdown(remainingTime); // Appel avec la bonne valeur
                 isTimerRunning = true;
                 updateButton(1);
-            }
+            } // if countdown
         }, 1000);
     } else {
         // === CAS DE LA REPRISE D'UNE PARTIE EN PAUSE ===
@@ -150,7 +151,7 @@ document.getElementById('startGameButton').addEventListener('click', function ()
         isTimerRunning = true;
         updateDatabaseStatus('running', remainingTime); // On passe aussi le temps restant
         updateButton(1); // "Mettre en pause"
-    }
+    } // else
 });
 
 document.getElementById('resetGameButton').addEventListener('click', function () {
