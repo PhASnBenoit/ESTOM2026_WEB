@@ -38,15 +38,18 @@ function updateButton(state) {
 
     switch (state) {
         case 1: // Timer en cours
-            startButton.textContent = "Mettre en pause";
+            //startButton.textContent = "Mettre en pause";
+            startButton.style.display = 'none';
             resetButton.style.display = 'inline';
             break;
         case 2: // Timer en pause
-            startButton.textContent = "Reprendre la partie";
+            //startButton.textContent = "Reprendre la partie";
+            startButton.style.display = 'none';
             resetButton.style.display = 'inline';
             break;
         case 3: // Timer terminé ou non démarré
             startButton.textContent = "Lancer une nouvelle partie";
+            startButton.style.display = 'inline';            
             resetButton.style.display = 'none';
             break;
     }
@@ -116,8 +119,29 @@ function updateDatabaseStatus(status, tempsRestant = null) {
     xhr.send(params);
 }
 
+function razPartie() {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "./razPartie.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    let params = `status=${status}`;
+
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            console.log(`Statut mis à jour : ${status}`);
+        } else {
+            console.error("Erreur lors de la mise à jour du statut.");
+        }
+    };
+
+    xhr.send(params);
+}
+
+
 document.getElementById('startGameButton').addEventListener('click', function () {
-    if (isStarting) return;
+    if (isStarting) {
+		return;
+	} // if isStarting
 
     if (isTimerRunning) {
         clearInterval(timerInterval); // Met en pause le timer
@@ -139,6 +163,8 @@ document.getElementById('startGameButton').addEventListener('click', function ()
             if (countdown <= 0) {
                 clearInterval(countdownInterval);
                 isStarting = false;
+				// initialiser la table BOM suite au départ jeu
+				razPartie();
                 updateDatabaseStatus('running'); // Mise à jour de la base de données
                 startCountdown(remainingTime); // Appel avec la bonne valeur
                 isTimerRunning = true;

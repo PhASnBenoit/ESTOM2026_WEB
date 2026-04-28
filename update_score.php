@@ -16,8 +16,6 @@ if (!$ip || $score === null) {
 
 $stmt = $conn->prepare("UPDATE BOM SET Score = ? WHERE IPAddr = ?");
 $stmt->bind_param("is", $score, $ip);
-//echo "COUCOU ";
-//die();
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true]);

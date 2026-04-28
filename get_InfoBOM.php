@@ -2,7 +2,6 @@
 // vérifié par PhA
 
 require 'private-estom/db_connect.php';
-
 header('Content-Type: application/json');
 
 
@@ -27,7 +26,15 @@ if (!isset($colorMap[$couleur])) {
 
 $couleurDB = $colorMap[$couleur]; // Convertit en entier pour la requête SQL
 
-$sql = "SELECT IPAddr, Progression, NbrCollision, Joueur, Collisions  FROM BOM WHERE Couleur = ?";
+$sql = "SELECT * FROM Config WHERE id=1 LIMIT 1";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$unite = (float)100/(float)$row["NbrPAV"];
+$stmt->close();
+
+$sql = "SELECT * FROM BOM WHERE Couleur = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $couleurDB);
 $stmt->execute();
@@ -35,8 +42,14 @@ $result = $stmt->get_result();
 
 $data = [];
 while ($row = $result->fetch_assoc()) {
-    $collisions = json_decode($row['Collisions'], true) ?? [];
+    $progression = $row['Remplissage']/2*$unite;
+	$sqlUpdate = "UPDATE BOM SET Progression = ? WHERE IPAddr = ?";
+    $stmtUpdate = $conn->prepare($sqlUpdate);
+    $stmtUpdate->bind_param("ds", $progression, $row['IPAddr']);
+    $stmtUpdate->execute();
+    $stmtUpdate->close();
 
+    $collisions = json_decode($row['Collisions'], true) ?? [];
     if ((int)$row['NbrCollision'] === 0) {
         $collisions = [];
         $sqlUpdate = "UPDATE BOM SET Collisions = NULL WHERE IPAddr = ?";

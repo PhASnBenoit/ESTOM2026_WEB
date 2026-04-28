@@ -3,6 +3,7 @@
 // v2.0 du 22/04/2026
 // v2.1 22/04/2026 Correction bug affichage PAV
 // v2.2 22/04/2026 Correction bug podium
+// v2.3 28/04/2026 Correction raz partie et Progression
 ?>
 <!DOCTYPE html>
 <html lang="en">
