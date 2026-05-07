@@ -15,7 +15,8 @@ $colorMap = [
     "Jaune" => 0,
     "Vert" => 1,
     "Bleu" => 2,
-    "Noir" => 3
+    "Noir" => 3,
+    "Blanc" => 40
 ];
 
 $couleur = $_GET['couleur'] ?? '';  // Récupère la couleur du camion demandée

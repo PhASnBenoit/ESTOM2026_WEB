@@ -1,29 +1,8 @@
 <?php
-// Vérifiée par PhA
+require 'debut.inc.php';
+require 'head.inc.php';
+require 'bodyHeader.inc.php';
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESTOM</title>
-    <link rel="stylesheet" href="./styles.css">
-    <link rel="icon" type="image/x-icon" href="./img/estom-logo.ico">
-</head>
-<body>
-    <header>
-        <h1 class="title">ESTOM</h1>
-        <nav class="navbar">
-            <ul class="menu">
-            </ul>
-        </nav>
-        <div class="logo" id="logo">
-            <a href="./index.php">
-                <img src="./img/estom-logo.png" alt="" id="estom-logo">
-            </a>
-        </div>
-    </header>
     <main>
         <section>
             <h2>Paramétrage du Jeu</h2>
@@ -203,10 +182,6 @@
             </div>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2026 ESTOM</p>
-    </footer>
-</body>
     <script src="js/parametre-du-jeu/updateConnexion.js"></script>
     <script>
         // Fonction pour gérer la visibilité du champ "Pts par PAV"
@@ -233,4 +208,6 @@
             });
         });
     </script>
-</html>
+<?php
+require 'fin.inc.php';
+?>

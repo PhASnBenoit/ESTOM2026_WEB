@@ -1,28 +1,8 @@
 <?php
-// vérifié par PhA
+require 'debut.inc.php';
+require 'head.inc.php';
+require 'bodyHeader.inc.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESTOM</title>
-    <link rel="stylesheet" href="./styles.css">
-    <link rel="icon" type="image/x-icon" href="./img/estom-logo.ico">
-</head>
-<body>
-    <header>
-        <h1 class="title">ESTOM</h1>
-        <nav class="navbar">
-            <ul class="menu">
-            </ul>
-        </nav>
-        <div class="logo" id="logo">
-            <a href="./index.php">
-                <img src="./img/estom-logo.png" alt="" id="estom-logo">
-            </a>
-        </div>
-    </header>
     <main>
         <section>
             <h2>Gestion de la partie</h2>
@@ -52,8 +32,8 @@
                                     $nbrBOMConfig = $row['NbrBOM_V'] + $row['NbrBOM_J'] + $row['NbrBOM_N'] + $row['NbrBOM_B'];
                                 }
 
-                                // Récupération du nombre de BOM enregistrées
-                                $sql = "SELECT COUNT(*) AS totalBOM FROM BOM";
+                                // Récupération du nombre de BOM enregistrées seulement, sans le bus
+                                $sql = "SELECT COUNT(*) AS totalBOM FROM BOM WHERE Couleur<4";          // PhA
                                 $result = $conn->query($sql);
                                 $nbrBOMEnregistrees = 0;
 
@@ -103,7 +83,6 @@
                 </div>
 
                 <?php
-                // Inclusion du fichier de connexion
                 require './private-estom/db_connect.php';
 
                 // Récupérer la durée du timer (en secondes) depuis la base de données
@@ -134,21 +113,21 @@
                     $nbrBOM_N = $row['NbrBOM_N'];
                     $nbrBOM_B = $row['NbrBOM_B'];
                     $tempsPartie = $row['duree'];
-                }
+                } // if
                 echo "<script>
                             const malusCollision = $malusCollision;
                             const ptsRecolte = $ptsRecolte;
                             const optionMode = $options;
                             const nbrPAV = $nbrPAV;
-                        </script>";
+                      </script>";
 
                 $colorMap = [
                     "Jaune" => 0,
                     "Vert" => 1,
                     "Bleu" => 2,
                     "Noir" => 3
+                    //"Blanc" => 40
                 ];
-
                 ?>
                 
                 <button id="startGameButton">Lancer la partie</button>
@@ -166,7 +145,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div id="tableauBars">
                 <?php
@@ -188,7 +166,8 @@
                     "Jaune" => "rgba(255, 205, 0, 0.6)",
                     "Vert" => "rgba(0, 124, 89, 0.6)",
                     "Bleu" => "rgba(0, 83, 135, 0.6)",
-                    "Noir" => "rgba(85, 93, 80, 0.6)"
+                    "Noir" => "rgba(85, 93, 80, 0.6)",
+                    "Blanc" => "rgba(255, 255, 255, 0.6)"
                 ];
 
                 foreach ($couleurs as $couleur => $nombreBOM) {
@@ -205,7 +184,7 @@
                     }
                     $stmt->close();
 
-                    for ($i = 0; $i < $nombreBOM; $i++) {
+                    for ($i = 0; $i < $nombreBOM; $i++) { // normalement 1 seul BOM !
                         $ip = $ipList[$i] ?? "NULL"; // Assigne une IP si disponible, sinon NULL
 
                         echo "<div class='route-container' data-couleur='$couleur' data-ip='$ip'>";
@@ -221,7 +200,7 @@
                         // BOM avec IP ou sans IP
                         echo "<img src='./img/BOM-$couleur.png' alt='Camion $couleur' 
                             class='imageCamion' data-couleur='$couleur' data-ip='$ip'
-                            style='position: absolute; left: 0%; top: 50%; width: 60px; opacity: 0.9; z-index: 3;'>";
+                            style='position: absolute; left: 0%; top: 50%; width: 80px; opacity: 0.9; z-index: 3;'>";
                             echo "<span class='pseudo' data-ip='$ip' 
                             style='
                                 display:none;
@@ -241,7 +220,7 @@
                                     top: 50%;
                                     left: {$positionLeft}%;
                                     transform: translate(-50%, -50%);
-                                    width: 20px;
+                                    width: 50px;
                                     opacity: 1;
                                     z-index: 4;
                                 '>";
@@ -249,6 +228,62 @@
                         echo "</div>";
                     } // for i
                 } // foreach couleur
+
+                //
+                // Affichage du BUS et ABB (PhA)
+                //
+                // Récupérer les IP des BOM de cette couleur
+                $couleur = 'Blanc';
+                $sql = "SELECT IPAddr FROM BOM WHERE Couleur = 40 LIMIT 1";  // 1 BUS
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                $row = $result->fetch_assoc();
+                $ip = $row['IPAddr'];
+                $stmt->close();
+                echo "<div class='route-container' data-couleur='Blanc' data-ip='$ip'>";
+
+                // Scoreboard à gauche du parcours
+                echo "<div class='scoreboard-container'>
+                <img src='./img/CadreScore-$couleur.png' class='scoreboard' data-couleur='$couleur' data-ip='$ip'>
+                <span class='score-text' id='score-$ip'>0</span>
+                </div>";
+
+                echo "<img src='./img/route.png' alt='Route' class='imageRoute'>";
+
+                // BUS avec IP ou sans IP
+                echo "<img src='./img/bus.webp' alt='Bus'
+                    class='imageCamion' data-couleur='Blanc' data-ip='$ip'
+                    style='position: absolute; left: 0%; top: 50%; width: 120px; opacity: 0.9; z-index: 3;'>";
+                echo "<span class='pseudo' data-ip='$ip'
+                    style='
+                        display:none;
+                        background-color: {$rgbaColors['Blanc']};
+                    '></span>";
+
+                echo "<img src='./img/LigneArrive.gif' alt='Ligne d’arrivée' class='imageArrive'>";
+
+                for ($j = 0; $j < $nbrPAV; $j++) {
+                    $espacement = 100 / ($nbrPAV + 1);
+                    $positionLeft = ($j + 1) * $espacement;
+
+                    echo "<img src='./img/abribus.webp' alt='PAV Blanc'
+                        class='imagePAV' data-couleur='Blanc' data-ip='$ip' data-index='$j'
+                        style='
+                            position: absolute;
+                            top: 50%;
+                            left: {$positionLeft}%;
+                            transform: translate(-50%, -50%);
+                            width: 50px;
+                            opacity: 1;
+                            z-index: 4;
+                        '>";
+                } // for j
+                echo "</div>";
+                //
+                // FIN BUS et ABB
+                //
                 ?>
             </div>
         </section>
@@ -308,8 +343,6 @@
     <script src="js/gestion-de-la-partie/loadPodium.js"></script>
     <script src="js/gestion-de-la-partie/updateCamion.js"></script>
     <script src="js/gestion-de-la-partie/updateTimer.js"></script>
-    <footer>
-        <p>&copy; 2026 ESTOM</p>
-    </footer>
-</body>
-</html>
+<?php
+require 'fin.inc.php';
+?>

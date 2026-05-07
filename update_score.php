@@ -11,7 +11,7 @@ $score = $data['score'] ?? null;
 if (!$ip || $score === null) {
     http_response_code(400);
     echo json_encode(["error" => "IP ou score manquant."]);
-    exit;
+    //exit;
 }
 
 $stmt = $conn->prepare("UPDATE BOM SET Score = ? WHERE IPAddr = ?");

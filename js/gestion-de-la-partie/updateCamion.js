@@ -44,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     let nbrCollision = camionData.nbrCollision ?? 0; //Nbr Collision par BOM
                     let collisions = camionData.collisions; //Coordonnées des collisions
                     let camion = document.querySelector(`.imageCamion[data-couleur="${couleur}"][data-ip="${ip}"]`);
-                    
                     if (!camion) return; // Si le camion n'existe pas, on ignore
 
                     let distance = Math.abs(progressionPourcentage - camion.dataset.prevProgression || 0);
@@ -73,7 +72,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     //console.log(`progression = ${progressionPourcentage}, pavsPasses = ${pavsPasses}`);
                     let maxPossibleScore = 0; // Nouveau score max dynamique
                     let scoreBrut = 0;
-
+                    //
+                    //  CALCUL DU SCORE
+                    //
                     if (optionMode === 0) {
                         // OPTION A : Score fixe par PAV
                         scoreBrut = pavsPasses * ptsRecolte;
@@ -144,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         })
                         .then(res => res.text()) // on lit la réponse brute en texte d'abord
                         .then(text => {
-                            //console.log("Réponse brute du serveur :", text);
+                            console.log("Réponse brute du serveur :", text);
                             try {
                                 const json = JSON.parse(text);
                                 if (!json.success) console.error("Erreur enregistrement score :", json.error);
@@ -300,7 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateAllCamions() {
-        let couleurs = ["Jaune", "Vert", "Bleu", "Noir"];
+        let couleurs = ["Jaune", "Vert", "Bleu", "Noir", "Blanc"];
         couleurs.forEach(couleur => updateCamionPosition(couleur));
     }
 
