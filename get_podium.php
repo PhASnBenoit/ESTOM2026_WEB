@@ -9,7 +9,8 @@ $colorNames = [
     0 => "Jaune",
     1 => "Vert",
     2 => "Bleu",
-    3 => "Noir"
+    3 => "Noir",
+   40 => "Blanc"
 ];
 
 $classement = [];

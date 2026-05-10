@@ -10,13 +10,13 @@ require 'bodyHeader.inc.php';
 
             <div id="TableauGestion" class="GTableauGestion">
                 <!-- Bouton pour ouvrir la fenêtre de saisie des joueurs -->
-                <button id="openModalButton">Ajouter Joueurs</button>
+                <button id="openModalButton">Nom des joueurs</button>
 
                 <!-- Fenêtre modale Joueur -->
                 <div id="playerModal" class="modal">
                     <div class="modal-content">
                         <span class="close-btn">&times;</span>
-                        <h2>Ajoutez vos joueurs</h2>
+                        <h2>Nom de vos joueurs</h2>
                         <form id="playerForm">
                             <div id="playerInputs">
                                 <?php

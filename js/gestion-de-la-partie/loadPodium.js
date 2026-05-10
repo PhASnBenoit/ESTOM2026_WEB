@@ -10,13 +10,23 @@ function loadPodium() {
             data.forEach((joueur, index) => {
                 const div = document.createElement('div');
                 div.className = `podium-place podium-${index}`;
-                div.innerHTML = `
-                    <span style="font-weight:bold;">${joueur.joueur}</span><br>
-                    <img src="./img/BOM-${joueur.couleur}.png" alt="BOM ${joueur.couleur}" style="width:90px;"><br>
-                    <span style="text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 5px #000;">
-                        Score : ${joueur.score}
-                    </span>
+                if (joueur.couleur == "Blanc") {
+                    div.innerHTML = `
+                        <span style="font-weight:bold;">${joueur.joueur}</span><br>
+                        <img src="./img/bus.webp" alt="BUS" style="width:90px;"><br>
+                        <span style="text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 5px #000;">
+                            Score : ${joueur.score}
+                        </span>
+                    `;
+                } else {
+                    div.innerHTML = `
+                        <span style="font-weight:bold;">${joueur.joueur}</span><br>
+                        <img src="./img/BOM-${joueur.couleur}.png" alt="BOM ${joueur.couleur}" style="width:90px;"><br>
+                        <span style="text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 5px #000;">
+                            Score : ${joueur.score}
+                        </span>
                 `;
+                } // else
                 container.appendChild(div);
             });
         })
