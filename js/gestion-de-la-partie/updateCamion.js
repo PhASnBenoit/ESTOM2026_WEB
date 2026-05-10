@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     pseudoSpan.style.top = `${camion.offsetTop - 20}px`; // Décalage au-dessus du camion
 
 
-                    // Grisage des TOM en fonction de la progression du camion
+                    // Grisage des PAVs en fonction de la progression du camion
                     let pavs = document.querySelectorAll(`.imagePAV[data-couleur="${couleur}"][data-ip="${ip}"]`);
                     console.log(`PAVs trouvés pour ${ip} :`, pavs.length);
                     //console.log(`Progression du camion (${ip}) :`, progressionPourcentage);

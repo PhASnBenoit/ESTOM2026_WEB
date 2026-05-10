@@ -88,7 +88,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 case 'stopped':
                 default:
                     isTimerRunning = false;
-                    document.getElementById('timer').textContent = "Cliquez sur le bouton pour lancer la Partie !";
+                    document.getElementById('timer').textContent = "Vous pouvez lancer la partie !";
                     updateButton(3);
                     break;
             }
@@ -183,7 +183,7 @@ document.getElementById('startGameButton').addEventListener('click', function ()
 document.getElementById('resetGameButton').addEventListener('click', function () {
     clearInterval(timerInterval); // Annuler le timer en cours
     remainingTime = timerDuration; // Réinitialiser le temps
-    document.getElementById('timer').textContent = "Cliquez sur le bouton pour lancer la partie";
+    document.getElementById('timer').textContent = "Vous pouvez lancer la partie";
     isTimerRunning = false;
     updateDatabaseStatus('stopped');
     updateButton(3); // "Lancer le timer"

@@ -6,7 +6,7 @@ require 'bodyHeader.inc.php';
     <main>
         <section>
             <h2>Gestion de la partie</h2>
-            <div id="timer" class="timer">Cliquez sur le bouton pour lancer la Partie !</div>
+            <div id="timer" class="timer">Vous pouvez lancer la partie !</div>
 
             <div id="TableauGestion" class="GTableauGestion">
                 <!-- Bouton pour ouvrir la fenêtre de saisie des joueurs -->
@@ -45,7 +45,8 @@ require 'bodyHeader.inc.php';
                                     0=> "Jaune",
                                     1=> "Vert",
                                     2=> "Bleu",
-                                    3=> "Noir"
+                                    3=> "Noir",
+                                    40=> "Blanc"
                                 ];
 
                                 // Récupération des BOM avec leur ID, couleur et joueur
@@ -63,7 +64,7 @@ require 'bodyHeader.inc.php';
                                         $joueur = $row['Joueur'] ?? "";
 
                                         echo "<div class='player-input'>
-                                                <span>BOM#$bomID - $couleur</span>
+                                                <span>".($couleur=="Blanc"?"BUS":"BOM")."#$bomID - $couleur</span>
                                                 <input type='text' name='joueurs[$bomID]' value='$joueur' maxlength='20' placeholder='Pseudo joueur' required>
                                             </div>";
                                     }
@@ -209,8 +210,11 @@ require 'bodyHeader.inc.php';
 
                         echo "<img src='./img/LigneArrive.gif' alt='Ligne d’arrivée' class='imageArrive'>";
 
+                        //
+                        //   PAVs  ABBs
+                        //
                         for ($j = 0; $j < $nbrPAV; $j++) {
-                            $espacement = 100 / ($nbrPAV + 1);
+                            $espacement = 95/$nbrPAV; // et non 100 pour laisser un espace avant la fin (PhA)
                             $positionLeft = ($j + 1) * $espacement;
 
                             echo "<img src='./img/PAV-$couleur.png' alt='PAV $couleur' 
@@ -265,7 +269,7 @@ require 'bodyHeader.inc.php';
                 echo "<img src='./img/LigneArrive.gif' alt='Ligne d’arrivée' class='imageArrive'>";
 
                 for ($j = 0; $j < $nbrPAV; $j++) {
-                    $espacement = 100 / ($nbrPAV + 1);
+                    $espacement = 95/$nbrPAV;
                     $positionLeft = ($j + 1) * $espacement;
 
                     echo "<img src='./img/abribus.webp' alt='PAV Blanc'
