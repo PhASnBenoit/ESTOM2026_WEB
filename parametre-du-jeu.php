@@ -37,7 +37,7 @@ require 'bodyHeader.inc.php';
                 $nbrBOM_N = $row['NbrBOM_N'];
                 $nbrBOM_B = $row['NbrBOM_B'];
                 $tempsPartie = $row['duree'];
-            }
+            } // if
 
             // Si le formulaire est soumis
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -53,7 +53,7 @@ require 'bodyHeader.inc.php';
                 $nouveauMalusCollision = filter_var($_POST['malus_collision'], FILTER_VALIDATE_FLOAT);
                 if ($nouveauMalusCollision === false || $nouveauMalusCollision < 0.2 || $nouveauMalusCollision > 5) {
                     $nouveauMalusCollision = $malusCollision;
-                }                
+                }  // if
                 
 
                 $nouveauNbrBOM_V = filter_var($_POST['nombre_bom_v'], FILTER_VALIDATE_INT, [
@@ -78,7 +78,7 @@ require 'bodyHeader.inc.php';
                     $nouveauOptions = 0;
                 } else {
                     $nouveauOptions = 1;
-                }
+                } // else
 
                 // Mise à jour dans la base de données
                 $sqlUpdate = "UPDATE Config SET Options = ?, PtsRecolte = ?, NbrPAV = ?, MalusCollision = ?, NbrBOM_V = ?, NbrBOM_J = ?, NbrBOM_N = ?, NbrBOM_B = ?, duree = ? WHERE Id = 1";
@@ -88,9 +88,7 @@ require 'bodyHeader.inc.php';
                 
                 header("Location: parametre-du-jeu.php?success=1");
                 exit;
-            }
-
-            // Fermeture de la connexion
+            } // if
             $conn->close();
             ?>
 
@@ -150,7 +148,8 @@ require 'bodyHeader.inc.php';
                         "Jaune" => $nbrBOM_J,
                         "Vert" => $nbrBOM_V,
                         "Bleu" => $nbrBOM_B,
-                        "Noir" => $nbrBOM_N
+                        "Noir" => $nbrBOM_N,
+                        "Blanc" => 1
                     ];
                     $maxBOM = max($nbrBOM_V, $nbrBOM_J, $nbrBOM_N, $nbrBOM_B);
                     $position = 1; // Position de chaque colonne dans la grille
@@ -160,18 +159,32 @@ require 'bodyHeader.inc.php';
                         
                         // Afficher 1 ou 2 BOM par couleur
                         for ($i = 0; $i < $maxBOM; $i++) {
-                            echo '<div id="BOM-' . $couleur . '-' . $i . '" class="bom-container">
-                                    <img src="./img/BOM-' . $couleur . '.png" alt="Camion ' . $couleur . '" id="BOM-' . $couleur . '-' . $i . '" class="grise" width="75" height="45">
-                                    <span id="BOM-IP-' . $couleur . '-' . $i . '" class="ip-text"></span>
-                                  </div>';
-                        }
+                            if ($couleur == "Blanc") { // si Bus
+                                echo '<div id="BOM-' . $couleur . '-' . $i . '" class="bom-container">
+                                        <img src="./img/bus.webp" alt="Bus" id="BOM-' . $couleur . '-' . $i . '" class="grise" width="75" height="45">
+                                        <span id="BOM-IP-' . $couleur . '-' . $i . '" class="ip-text"></span>
+                                    </div>';
+                            } else {
+                                echo '<div id="BOM-' . $couleur . '-' . $i . '" class="bom-container">
+                                        <img src="./img/BOM-' . $couleur . '.png" alt="Camion ' . $couleur . '" id="BOM-' . $couleur . '-' . $i . '" class="grise" width="75" height="45">
+                                        <span id="BOM-IP-' . $couleur . '-' . $i . '" class="ip-text"></span>
+                                    </div>';
+                            } // else BOM
+                        } // for
                         echo '</div>';
                         echo '<div id="ColonnePAV' . $couleur . '" style="grid-column: ' . $position . '; grid-row: 2;">';
                         for ($i = 0; $i < 10 ; $i++) { 
-                            echo '<div class="LignePAV">
-                                    <img src="./img/PAV-' . $couleur . '.png" alt="PAV ' . $couleur . '" id="PAV-' . $couleur . '-' . $i . '" class="grise imagePAV" width="29" height="45">
-                                    <span id="PAV-IP-' . $couleur . '-' . $i . '" class="ip-text"></span>
-                                </div>';
+                            if ($couleur == "Blanc") { // si ABB
+                                echo '<div class="LignePAV">
+                                        <img src="./img/abribus.webp" alt="Abribus" id="PAV-' . $couleur . '-' . $i . '" class="grise imagePAV" width="29" height="45">
+                                        <span id="PAV-IP-' . $couleur . '-' . $i . '" class="ip-text"></span>
+                                    </div>';
+                            } else {
+                                echo '<div class="LignePAV">
+                                        <img src="./img/PAV-' . $couleur . '.png" alt="PAV ' . $couleur . '" id="PAV-' . $couleur . '-' . $i . '" class="grise imagePAV" width="29" height="45">
+                                        <span id="PAV-IP-' . $couleur . '-' . $i . '" class="ip-text"></span>
+                                    </div>';
+                            } // else
                         } // for
                         echo '</div>';
                         $position++; // Passe à la colonne suivante
