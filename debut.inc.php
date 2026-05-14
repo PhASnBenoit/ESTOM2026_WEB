@@ -7,7 +7,8 @@
 // v2.4 04/05/2026 Ajout Bus et Arrêts
 // v2.5 10/05/2026 Correction nom joueur
 // v2.6 14/05/2026 Correction image score bus et grandeur abris
-$VERSION = "2.6"
+// v2.7 14/05/2026 Affichage bus et abb sur paramétrage
+$VERSION = "2.7"
 ?>
 <!DOCTYPE html>
 <html lang="fr">
