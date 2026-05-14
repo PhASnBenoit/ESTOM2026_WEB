@@ -279,7 +279,7 @@ require 'bodyHeader.inc.php';
                             top: 50%;
                             left: {$positionLeft}%;
                             transform: translate(-50%, -50%);
-                            width: 50px;
+                            width: 70px;
                             opacity: 1;
                             z-index: 4;
                         '>";
