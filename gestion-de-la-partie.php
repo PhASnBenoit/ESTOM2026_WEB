@@ -236,54 +236,55 @@ require 'bodyHeader.inc.php';
                 //
                 // Affichage du BUS et ABB (PhA)
                 //
-                // Récupérer les IP des BOM de cette couleur
                 $couleur = 'Blanc';
                 $sql = "SELECT IPAddr FROM BOM WHERE Couleur = 40 LIMIT 1";  // 1 BUS
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                $row = $result->fetch_assoc();
-                $ip = $row['IPAddr'];
-                $stmt->close();
-                echo "<div class='route-container' data-couleur='Blanc' data-ip='$ip'>";
+                if ($result->num_rows === 1) {  // Si un bus déctecté
+                    $row = $result->fetch_assoc();
+                    $ip = $row['IPAddr'];
+                    $stmt->close();
+                    echo "<div class='route-container' data-couleur='Blanc' data-ip='$ip'>";
 
-                // Scoreboard à gauche du parcours
-                echo "<div class='scoreboard-container'>
-                <img src='./img/CadreScore-$couleur.png' class='scoreboard' data-couleur='$couleur' data-ip='$ip'>
-                <span class='score-text' id='score-$ip'>0</span>
-                </div>";
+                    // Scoreboard à gauche du parcours
+                    echo "<div class='scoreboard-container'>
+                    <img src='./img/CadreScore-$couleur.png' class='scoreboard' data-couleur='$couleur' data-ip='$ip'>
+                    <span class='score-text' id='score-$ip'>0</span>
+                    </div>";
 
-                echo "<img src='./img/route.png' alt='Route' class='imageRoute'>";
+                    echo "<img src='./img/route.png' alt='Route' class='imageRoute'>";
 
-                // BUS avec IP ou sans IP
-                echo "<img src='./img/bus.webp' alt='Bus'
-                    class='imageCamion' data-couleur='Blanc' data-ip='$ip'
-                    style='position: absolute; left: 0%; top: 50%; width: 120px; opacity: 0.9; z-index: 3;'>";
-                echo "<span class='pseudo' data-ip='$ip'
-                    style='
-                        display:none;
-                        background-color: {$rgbaColors['Blanc']};
-                    '></span>";
-
-                echo "<img src='./img/LigneArrive.gif' alt='Ligne d’arrivée' class='imageArrive'>";
-
-                for ($j = 0; $j < $nbrPAV; $j++) {
-                    $espacement = 95/$nbrPAV;
-                    $positionLeft = ($j + 1) * $espacement;
-
-                    echo "<img src='./img/abribus.webp' alt='PAV Blanc'
-                        class='imagePAV' data-couleur='Blanc' data-ip='$ip' data-index='$j'
+                    // BUS avec IP ou sans IP
+                    echo "<img src='./img/bus.webp' alt='Bus'
+                        class='imageCamion' data-couleur='Blanc' data-ip='$ip'
+                        style='position: absolute; left: 0%; top: 50%; width: 120px; opacity: 0.9; z-index: 3;'>";
+                    echo "<span class='pseudo' data-ip='$ip'
                         style='
-                            position: absolute;
-                            top: 50%;
-                            left: {$positionLeft}%;
-                            transform: translate(-50%, -50%);
-                            width: 70px;
-                            opacity: 1;
-                            z-index: 4;
-                        '>";
-                } // for j
+                            display:none;
+                            background-color: {$rgbaColors['Blanc']};
+                        '></span>";
+
+                    echo "<img src='./img/LigneArrive.gif' alt='Ligne d’arrivée' class='imageArrive'>";
+
+                    for ($j = 0; $j < $nbrPAV; $j++) {
+                        $espacement = 95/$nbrPAV;
+                        $positionLeft = ($j + 1) * $espacement;
+
+                        echo "<img src='./img/abribus.webp' alt='PAV Blanc'
+                            class='imagePAV' data-couleur='Blanc' data-ip='$ip' data-index='$j'
+                            style='
+                                position: absolute;
+                                top: 50%;
+                                left: {$positionLeft}%;
+                                transform: translate(-50%, -50%);
+                                width: 70px;
+                                opacity: 1;
+                                z-index: 4;
+                            '>";
+                    } // for j
+                } // if 1 bus
                 echo "</div>";
                 //
                 // FIN BUS et ABB
