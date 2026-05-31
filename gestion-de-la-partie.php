@@ -1,5 +1,9 @@
 <?php
 require 'debut.inc.php';
+if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
+    header("Location: ./index.php");
+    exit();
+} // if
 require 'head.inc.php';
 require 'bodyHeader.inc.php';
 ?>

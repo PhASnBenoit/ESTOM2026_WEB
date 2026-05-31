@@ -10,7 +10,9 @@
 // v2.7 14/05/2026 Affichage bus et abb sur paramétrage
 // 20/05/2026 v2.8 Corr bug si pas de bus
 // 30/05/2026 v2.9 Aff connexion des Bus, ABB
-$VERSION = "2.9"
+// 31/05/2026 v3.0 Ajout page de connexion
+$VERSION = "3.0";
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="fr">

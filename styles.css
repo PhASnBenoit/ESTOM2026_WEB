@@ -81,6 +81,17 @@ header::after {
     text-shadow: 2px 2px 0px gray;
 }
 
+.logo_droite {
+    left: 1rem;
+    top: 0.5rem;
+    position: relative;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    &:hover {
+        transform: scale(1.2);
+    }
+}
+
 .logo {
     left: 1rem;
     top: 0.5rem;
@@ -91,6 +102,7 @@ header::after {
         transform: scale(1.2);
     }
 }
+
 .logo img {
     width: 5rem;
     height: 5rem;
