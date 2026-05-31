@@ -11,7 +11,7 @@ function updateConnexion() {
 
             let currentState = {}; // Stocke l'état actuel
             let pavUsedIPs = {}; // Suivi des IPs déjà attribuées pour éviter les doublons
-            let pavCount = { "Jaune": 0, "Vert": 0, "Bleu": 0, "Noir": 0 };
+            let pavCount = { "Jaune": 0, "Vert": 0, "Bleu": 0, "Noir": 0, "Blanc":0 };
 
             // Réinitialiser les IP affichées
             document.querySelectorAll('.ip-text').forEach(span => {
@@ -45,7 +45,7 @@ function updateConnexion() {
                             }
                         }
                     });
-                } else if (type === "PAV" && pavCount[couleur] < 10) {
+                } else if (type === "PAV") {
                     let pavElements = document.querySelectorAll(`[id^="PAV-${couleur}-"]`);
 
                     // Vérifier qu'on n'a pas déjà attribué cette IP
@@ -87,7 +87,7 @@ function updateConnexion() {
                         element.classList.add('deconnecte');
                         element.classList.remove('connecte');
 
-                        // Après 5 secondes, le remet en gris
+                        // Après X secondes, le remet en gris
                         setTimeout(() => {
                             element.classList.add('grise');
                             element.classList.remove('deconnecte');

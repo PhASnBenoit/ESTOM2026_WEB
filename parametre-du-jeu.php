@@ -179,7 +179,7 @@ require 'bodyHeader.inc.php';
                                         <img src="./img/abribus.webp" alt="Abribus" id="PAV-' . $couleur . '-' . $i . '" class="grise imagePAV" width="29" height="45">
                                         <span id="PAV-IP-' . $couleur . '-' . $i . '" class="ip-text"></span>
                                     </div>';
-                            } else {
+                            } else {  // si PAV
                                 echo '<div class="LignePAV">
                                         <img src="./img/PAV-' . $couleur . '.png" alt="PAV ' . $couleur . '" id="PAV-' . $couleur . '-' . $i . '" class="grise imagePAV" width="29" height="45">
                                         <span id="PAV-IP-' . $couleur . '-' . $i . '" class="ip-text"></span>

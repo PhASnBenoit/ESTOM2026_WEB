@@ -9,7 +9,8 @@
 // v2.6 14/05/2026 Correction image score bus et grandeur abris
 // v2.7 14/05/2026 Affichage bus et abb sur paramétrage
 // 20/05/2026 v2.8 Corr bug si pas de bus
-$VERSION = "2.8"
+// 30/05/2026 v2.9 Aff connexion des Bus, ABB
+$VERSION = "2.9"
 ?>
 <!DOCTYPE html>
 <html lang="fr">

@@ -9,7 +9,8 @@ $couleurs = [
     0 => "Jaune",
     1 => "Vert",
     2 => "Bleu",
-    3 => "Noir"
+    3 => "Noir",
+    40 => "Blanc"  // PhA 2.9
 ];
 
 $data = [];
@@ -25,18 +26,17 @@ foreach ($tables as $table) {
             $short_ip = isset($ip_parts[2]) && isset($ip_parts[3]) ? $ip_parts[2] . '.' . $ip_parts[3] : '??.??';
             //$short_ip = isset($ip_parts[3]) ? $ip_parts[3] : '??';
 
-
             $couleur = isset($couleurs[$row['Couleur']]) ? $couleurs[$row['Couleur']] : "Inconnu";
             
             $data[] = [
-                'source' => $table, // Indique si l'IP vient de BOM ou PAV
+                'source' => $table, // Indique si l'IP vient de la table BOM ou PAV
                 'couleur' => $couleur,
                 'ip' => $short_ip,
                 'connected' => (int)$row['Connected']
             ];
-        }
-    }
-}
+        } // wh
+    } // if
+} // foreach
 
 echo json_encode($data);
 $conn->close();
