@@ -12,8 +12,6 @@ require 'bodyHeader.inc.php';
             <h2>Paramétrage du Jeu</h2>
             
             <?php
-            // Inclusion du fichier de connexion
-//            include '/var/www/html/private-estom/db_connect.php';
             require 'private-estom/db_connect.php';
 
             // Initialisation des paramètres
@@ -22,12 +20,13 @@ require 'bodyHeader.inc.php';
             $ptsRecolte = 10;
             $nbrPAV = 10;
             $malusCollision = 2;
+            $luminosite = 1;
             $nbrBOM_V = 1;
             $nbrBOM_J = 1;
             $nbrBOM_N = 1;
             $nbrBOM_B = 1;
             // Récupération des paramètres existants
-            $sql = "SELECT Options, PtsRecolte, NbrPAV, MalusCollision, NbrBOM_V, NbrBOM_J, NbrBOM_N, NbrBOM_B, duree FROM Config WHERE Id = 1";
+            $sql = "SELECT * FROM Config WHERE Id = 1";
             $result = $conn->query($sql);
 
             if ($result && $result->num_rows > 0) {
@@ -36,6 +35,7 @@ require 'bodyHeader.inc.php';
                 $ptsRecolte = $row['PtsRecolte'];
                 $nbrPAV = $row['NbrPAV'];
                 $malusCollision = $row['MalusCollision'];
+                $luminosite = $row['Luminosite'];
                 $nbrBOM_V = $row['NbrBOM_V'];
                 $nbrBOM_J = $row['NbrBOM_J'];
                 $nbrBOM_N = $row['NbrBOM_N'];
@@ -54,11 +54,15 @@ require 'bodyHeader.inc.php';
                 $nouveauNbrPAV = filter_var($_POST['nombre_PAV'], FILTER_VALIDATE_INT, [
                     'options' => ['min_range' => 1, 'max_range' => 10]
                 ]) ?? $nbrPAV;
+
                 $nouveauMalusCollision = filter_var($_POST['malus_collision'], FILTER_VALIDATE_FLOAT);
                 if ($nouveauMalusCollision === false || $nouveauMalusCollision < 0.2 || $nouveauMalusCollision > 5) {
                     $nouveauMalusCollision = $malusCollision;
                 }  // if
                 
+                $nouveauLuminosite = filter_var($_POST['luminosite'], FILTER_VALIDATE_INT, [
+                    'options' => ['min_range' => 1, 'max_range' => 3]
+                ]) ?? $luminosite;
 
                 $nouveauNbrBOM_V = filter_var($_POST['nombre_bom_v'], FILTER_VALIDATE_INT, [
                     'options' => ['min_range' => 1, 'max_range' => 2]
@@ -85,9 +89,9 @@ require 'bodyHeader.inc.php';
                 } // else
 
                 // Mise à jour dans la base de données
-                $sqlUpdate = "UPDATE Config SET Options = ?, PtsRecolte = ?, NbrPAV = ?, MalusCollision = ?, NbrBOM_V = ?, NbrBOM_J = ?, NbrBOM_N = ?, NbrBOM_B = ?, duree = ? WHERE Id = 1";
+                $sqlUpdate = "UPDATE Config SET Options = ?, PtsRecolte = ?, NbrPAV = ?, MalusCollision = ?, NbrBOM_V = ?, NbrBOM_J = ?, NbrBOM_N = ?, NbrBOM_B = ?, duree = ?, Luminosite = ? WHERE Id = 1";
                 $stmt = $conn->prepare($sqlUpdate);
-                $stmt->bind_param("iiidiiiii", $nouveauOptions, $nouveauPtsRecolte, $nouveauNbrPAV, $nouveauMalusCollision,                  $nouveauNbrBOM_V, $nouveauNbrBOM_J, $nouveauNbrBOM_N, $nouveauNbrBOM_B, $nouveauTempsPartie);
+                $stmt->bind_param("iiidiiiiii", $nouveauOptions, $nouveauPtsRecolte, $nouveauNbrPAV, $nouveauMalusCollision,                  $nouveauNbrBOM_V, $nouveauNbrBOM_J, $nouveauNbrBOM_N, $nouveauNbrBOM_B, $nouveauTempsPartie, $nouveauLuminosite);
                 $stmt->execute();
                 
                 header("Location: parametre-du-jeu.php?success=1");
@@ -112,6 +116,9 @@ require 'bodyHeader.inc.php';
 
                             <label for="malus_collision" id="malus_collision">Malus de collision :</label>
                             <input type="number" id="malus_collision_input" name="malus_collision" value="<?php echo htmlspecialchars($malusCollision); ?>" step="0.2" min="0.2" max="5" required>
+
+                            <label for="luminosite" id="luminosite">Luminosité :</label>
+                            <input type="number" id="luminosite_input" name="luminosite" value="<?php echo htmlspecialchars($luminosite); ?>" step="1" min="1" max="3" required>
 
                             <label id="optionA_label" for="optionA">
                                 <input type="radio" name="regle" id="optionA" value="option_a" <?php echo $options == 0 ? 'checked' : ''; ?>>

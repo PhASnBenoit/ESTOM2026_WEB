@@ -11,7 +11,8 @@
 // 20/05/2026 v2.8 Corr bug si pas de bus
 // 30/05/2026 v2.9 Aff connexion des Bus, ABB
 // 31/05/2026 v3.0 Ajout page de connexion
-$VERSION = "3.0";
+// 01/06/2026 v3.1 Ajout luminosité
+$VERSION = "3.1";
 session_start();
 ?>
 <!DOCTYPE html>
