@@ -172,7 +172,7 @@ require 'bodyHeader.inc.php';
                         for ($i = 0; $i < $maxBOM; $i++) {
                             if ($couleur == "Blanc") { // si Bus
                                 echo '<div id="BOM-' . $couleur . '-' . $i . '" class="bom-container">
-                                        <img src="./img/bus.webp" alt="Bus" id="BOM-' . $couleur . '-' . $i . '" class="grise" width="75" height="45">
+                                        <img src="./img/bus.png" alt="Bus" id="BOM-' . $couleur . '-' . $i . '" class="grise" width="75" height="45">
                                         <span id="BOM-IP-' . $couleur . '-' . $i . '" class="ip-text"></span>
                                     </div>';
                             } else {
@@ -187,7 +187,7 @@ require 'bodyHeader.inc.php';
                         for ($i = 0; $i < 10 ; $i++) { 
                             if ($couleur == "Blanc") { // si ABB
                                 echo '<div class="LignePAV">
-                                        <img src="./img/abribus.webp" alt="Abribus" id="PAV-' . $couleur . '-' . $i . '" class="grise imagePAV" width="29" height="45">
+                                        <img src="./img/abribus.png" alt="Abribus" id="PAV-' . $couleur . '-' . $i . '" class="grise imagePAV" width="29" height="45">
                                         <span id="PAV-IP-' . $couleur . '-' . $i . '" class="ip-text"></span>
                                     </div>';
                             } else {  // si PAV

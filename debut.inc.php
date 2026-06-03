@@ -12,7 +12,8 @@
 // 30/05/2026 v2.9 Aff connexion des Bus, ABB
 // 31/05/2026 v3.0 Ajout page de connexion
 // 01/06/2026 v3.1 Ajout luminosité
-$VERSION = "3.1";
+// 03/06/2026 v3.2 Modif styles et images
+$VERSION = "3.2";
 session_start();
 ?>
 <!DOCTYPE html>

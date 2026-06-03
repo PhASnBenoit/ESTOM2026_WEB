@@ -261,7 +261,7 @@ require 'bodyHeader.inc.php';
                     echo "<img src='./img/route.png' alt='Route' class='imageRoute'>";
 
                     // BUS avec IP ou sans IP
-                    echo "<img src='./img/bus.webp' alt='Bus'
+                    echo "<img src='./img/bus.png' alt='Bus'
                         class='imageCamion' data-couleur='Blanc' data-ip='$ip'
                         style='position: absolute; left: 0%; top: 50%; width: 120px; opacity: 0.9; z-index: 3;'>";
                     echo "<span class='pseudo' data-ip='$ip'
@@ -276,7 +276,7 @@ require 'bodyHeader.inc.php';
                         $espacement = 95/$nbrPAV;
                         $positionLeft = ($j + 1) * $espacement;
 
-                        echo "<img src='./img/abribus.webp' alt='PAV Blanc'
+                        echo "<img src='./img/abribus.png' alt='PAV Blanc'
                             class='imagePAV' data-couleur='Blanc' data-ip='$ip' data-index='$j'
                             style='
                                 position: absolute;

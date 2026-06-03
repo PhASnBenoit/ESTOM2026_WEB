@@ -12,7 +12,7 @@ body {
     overflow: hidden;
     color: #333;
     min-height: calc(100vw * var(--imgh) / var(--imgw));
-    background-image: url("./img/background.webp");
+    background-image: url("./img/background.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -50,7 +50,7 @@ html, body {
 /*===== Section Header =====*/
 header {
     background: #00d77d;
-    background-image: url("./img/banniere.webp");
+    background-image: url("./img/banniere.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -198,14 +198,14 @@ h2 {
 .timer {
     font-size: 1.25rem;
     font-weight: bold;
-    color: #ffff00;
+    color: #0c5e22
     margin-bottom: 5px;
 }
 #startGameButton, #resetGameButton {
     grid-column: 1;
     grid-row: 1;
     background-color: rgba(165,165,165,0.7);
-    color: #ffff00;
+    color: #0c5e22;
     font-size: 1rem;
     margin: auto;
     font-weight: bold;
@@ -229,7 +229,7 @@ h2 {
     grid-column: 4;
     grid-row: 1;
     background-color: rgba(165,165,165,0.7);
-    color: #ffff00;
+    color: #0c5e22;
     font-size: 1rem;
     font-weight: bold;
     margin: auto;
